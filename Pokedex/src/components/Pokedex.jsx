@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import './pokemon.css'
 
 export default function Pokedex() {
-  const [id, setId] = useState(1); //iniciando id com valor 1
-  const [pokemon, setPokemon] = useState(null); //iniciando dado pokemon com valor nulo
+  const [id, setId] = useState(1);
+  const [pokemon, setPokemon] = useState(null);
+  const [direction, setDirection] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -19,29 +21,40 @@ export default function Pokedex() {
     fetchData();
   }, [id]);
 
-   const nextPokemon = () => {
-    setId(id+ 1)
-   }
-   const previousPokemon = () => {
-    try{ setId(id- 1)} catch (error) {
-        console.error("Não tem pokemon anterior", error);
-    }0
-   }
+  const nextPokemon = () => {
+    setDirection("next");
+    setId(id + 1);
+  };
+
+  const previousPokemon = () => {
+    setDirection("previous");
+    try {
+      setId(id - 1);
+    } catch (error) {
+      console.error("Não tem pokemon anterior", error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        {pokemon && (
+    <div>
+      {pokemon && (
+        <motion.div
+          key={id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="pokemon">
             <p id="name">{pokemon.name}</p>
             <img src={pokemon.sprites.front_default} alt="{pokemon.name}" />
             
             <div className="buttons">
-            <button onClick={previousPokemon}>Anterior</button>
-            <button onClick={nextPokemon}>Proximo</button></div>
+              <button onClick={previousPokemon}>Anterior</button>
+              <button onClick={nextPokemon}>Próximo</button>
+            </div>
           </div>
-        )}
-      </div>
-    </>
+        </motion.div>
+      )}
+    </div>
   );
 }

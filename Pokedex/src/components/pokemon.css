@@ -11,8 +11,7 @@
 
 .pokemon{
     height: 85vh;
-    background-color: #FFFFFF;
-    border: #EF233C solid 15px;
+    background-color: #ec2f2f;
     border-radius: 15px;
     padding: 5px;
     display: flex;
@@ -46,7 +45,7 @@
 }
 
 .buttons button {
-    background-color: #D90429;
+    background-color: #4276e6;
     color: #EDF2F4;
     width: 240px;
     height: 120px;
